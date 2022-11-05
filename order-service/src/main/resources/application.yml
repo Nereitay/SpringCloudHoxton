@@ -44,3 +44,9 @@ ribbon:
     enabled: true # 开启饥饿加载
     clients:
       - userservice #指定对userservice这个服务饥饿加载
+# FEIGN 自定义配置，级别高，能覆盖@EnableFeignClients(defaultConfiguration = DefaultFeignConfiguration.class)
+#feign:
+#  client:
+#    config:
+#      default: # 这里用default就是全局配置，如果是写服务名称，则是针对某个微服务的配置
+#        loggerLevel: FULL #  日志级别
