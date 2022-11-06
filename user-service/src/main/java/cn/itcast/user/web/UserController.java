@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -51,5 +52,13 @@ public class UserController {
         System.out.println("truth: " + truth);
         return userService.queryById(id);
     }
+
+    @GetMapping("/filters") // http://localhost:10010/user/filters?authorization=admin
+    public void queryById(HttpServletRequest request) {
+        String header = request.getHeader("Truth");
+        System.out.println(header);
+    }
+
+
 
 }
