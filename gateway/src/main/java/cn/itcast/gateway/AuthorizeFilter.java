@@ -11,6 +11,20 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
+/**
+ * - order值越小，优先级越高
+ * - 当过滤器的order值一样时，会按照
+ * defaultFilter （由上到下 1， 2， 3）>
+ * 路由过滤器 （由上到下 1， 2， 3）>
+ * GlobalFilter (Ordered/@Order) 的顺序执行
+ *
+ * RouteDefinitionRouteLocator#getFilters()方法是先加载defaultFilters，
+ * 然后再加载某个route的filters，然后合并
+ *
+ * FilteringWebHandler#handle()方法会加载全局过滤器，
+ * 与前面的过滤器合并后根据order排序，组织过滤器链
+ *
+ */
 @Component
 //@Order(-1)
 public class AuthorizeFilter implements GlobalFilter, Ordered {
