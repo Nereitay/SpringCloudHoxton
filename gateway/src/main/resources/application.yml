@@ -18,10 +18,27 @@ spring:
             - Path=/user/** # 路径断言，判断路径是否是以/user开头，如果是则符合
 #          filters: # 过滤器
 #            - AddRequestHeader=Truth,I am invincible! #添加请求头 key, value格式
-
         - id: order-service
           uri: lb://orderservice
           # 如果不符合断言要求： There was an unexpected error (type=Not - Found, status=404)
           predicates:
             - Path=/order/**
 #            - Before=2022-12-20T17:42:47.789-07:00[Europe/Paris] # ZonedDateTime
+
+      globalcors: # 全局的跨域处理
+        add-to-simple-url-handler-mapping: true # 解决options请求被拦截问题
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: # 允许哪些网站的跨域请求
+              - "http://127.0.0.1:8090"
+              - "http://www.leyou.com"
+            allowedMethods: # 允许的跨域ajax的请求方式
+              - "GET"
+              - "POST"
+              - "DELETE"
+              - "PUT"
+              - "OPTIONS"
+            allowedHeaders: "*" # 允许在请求中携带的头信息
+            allowCredentials: true # 是否允许携带cookie
+            maxAge: 360000 # 这次跨域检测的有效期
+
